@@ -2,6 +2,7 @@
 /**
  * @author xknower
  */
+package ch02;
 
 import java.util.Random;
 

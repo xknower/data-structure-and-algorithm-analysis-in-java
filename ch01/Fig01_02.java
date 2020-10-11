@@ -1,6 +1,9 @@
 /**
+ * 递归函数
+ * 
  * @author xknower
  */
+package ch01;
 
 public class Fig01_02 {
     public static int f(int x) {

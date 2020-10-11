@@ -1,6 +1,9 @@
 /**
+ * 无终止递归程序
+ * 
  * @author xknower
  */
+package ch01;
 
 public class Fig01_03 {
     public static int bad(int n) {

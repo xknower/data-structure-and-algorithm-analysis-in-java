@@ -1,6 +1,7 @@
 /**
  * @author xknower
  */
+package ch02;
 
 public class Fig02_09 {
     public static final int NOT_FOUND = -1;

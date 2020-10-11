@@ -1,6 +1,7 @@
 /**
  * @author xknower
  */
+package ch02;
 
 class Fig02_12 {
     public static int gcd(int m, int n) {
@@ -29,7 +30,7 @@ class Fig02_12 {
         for (int n = 500; n <= 64000; n *= 2) {
 
             long start = System.currentTimeMillis();
-            double prob = probRelPrime(n);
+            // double prob = probRelPrime(n);
             long end = System.currentTimeMillis();
 
             if (n == 500)

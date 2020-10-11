@@ -1,6 +1,7 @@
 /**
  * @author xknower
  */
+package ch02;
 
 public class Fig02_11 {
     public static boolean isEven(int n) {

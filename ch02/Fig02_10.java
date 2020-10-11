@@ -1,6 +1,7 @@
 /**
  * @author xknower
  */
+package ch02;
 
 public class Fig02_10 {
     public static long gcd(long m, long n) {

@@ -1,6 +1,9 @@
 /**
+ * 打印整数的递归程序
+ * 
  * @author xknower
  */
+package ch01;
 
 public class Fig01_04 {
     public static void printDigit(int n) {
