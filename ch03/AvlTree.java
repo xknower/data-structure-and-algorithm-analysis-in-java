@@ -16,12 +16,39 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * 自平衡二叉查找树(高度平衡树) : 在AVL树中任何节点的两个子树的高度最大差别为 1, 增加和删除可能需要通过一次或多次树旋转来重新平衡这个树。
+ *
  * Implements an AVL tree. Note that all "matching" is based on the compareTo
  * method.
  * 
  * @author Mark Allen Weiss
  */
+package ch03;
+
 public class AvlTree<AnyType extends Comparable<? super AnyType>> {
+
+    /** The tree root. */
+    private AvlNode<AnyType> root;
+
+    private static class AvlNode<AnyType> {
+        // Constructors
+        AvlNode(AnyType theElement) {
+            this(theElement, null, null);
+        }
+
+        AvlNode(AnyType theElement, AvlNode<AnyType> lt, AvlNode<AnyType> rt) {
+            element = theElement;
+            left = lt;
+            right = rt;
+            height = 0;
+        }
+
+        AnyType element; // The data in the node
+        AvlNode<AnyType> left; // Left child
+        AvlNode<AnyType> right; // Right child
+        int height; // Height
+    }
+
     /**
      * Construct the tree.
      */
@@ -180,7 +207,7 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
      */
     private AvlNode<AnyType> insert(AnyType x, AvlNode<AnyType> t) {
         if (t == null)
-            return new AvlNode<>(x, null, null);
+            return new AvlNode<>(x);
 
         int compareResult = x.compareTo(t.element);
 
@@ -311,32 +338,13 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
         return rotateWithRightChild(k1);
     }
 
-    private static class AvlNode<AnyType> {
-        // Constructors
-        AvlNode(AnyType theElement) {
-            this(theElement, null, null);
-        }
+}
 
-        AvlNode(AnyType theElement, AvlNode<AnyType> lt, AvlNode<AnyType> rt) {
-            element = theElement;
-            left = lt;
-            right = rt;
-            height = 0;
-        }
-
-        AnyType element; // The data in the node
-        AvlNode<AnyType> left; // Left child
-        AvlNode<AnyType> right; // Right child
-        int height; // Height
-    }
-
-    /** The tree root. */
-    private AvlNode<AnyType> root;
-
+class AvlTreeTest {
     // Test program
     public static void main(String[] args) {
         AvlTree<Integer> t = new AvlTree<>();
-        final int SMALL = 40;
+        final int SMALL = 40 + 1000000;
         final int NUMS = 1000000; // must be even
         final int GAP = 37;
 
@@ -355,8 +363,10 @@ public class AvlTree<AnyType extends Comparable<? super AnyType>> {
             if (NUMS < SMALL)
                 t.checkBalance();
         }
+
         if (NUMS < SMALL)
             t.printTree();
+
         if (t.findMin() != 2 || t.findMax() != NUMS - 2)
             System.out.println("FindMin or FindMax error!");
 

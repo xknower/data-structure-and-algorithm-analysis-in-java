@@ -14,12 +14,38 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * Splay 伸展树 : 是一种自调整形式的二叉查找树，它会沿着从某个节点到树根之间的路径，通过一系列的旋转把这个节点搬移到树根去。
+ * 
  * Implements a top-down splay tree. Note that all "matching" is based on the
  * compareTo method.
  * 
  * @author Mark Allen Weiss
  */
+package ch03;
+
 public class SplayTree<AnyType extends Comparable<? super AnyType>> {
+
+    private BinaryNode<AnyType> root;
+    private BinaryNode<AnyType> nullNode;
+
+    // Basic node stored in unbalanced binary search trees
+    private static class BinaryNode<AnyType> {
+        // Constructors
+        BinaryNode(AnyType theElement) {
+            this(theElement, null, null);
+        }
+
+        BinaryNode(AnyType theElement, BinaryNode<AnyType> lt, BinaryNode<AnyType> rt) {
+            element = theElement;
+            left = lt;
+            right = rt;
+        }
+
+        AnyType element; // The data in the node
+        BinaryNode<AnyType> left; // Left child
+        BinaryNode<AnyType> right; // Right child
+    }
+
     /**
      * Construct the tree.
      */
@@ -234,27 +260,9 @@ public class SplayTree<AnyType extends Comparable<? super AnyType>> {
         return k2;
     }
 
-    // Basic node stored in unbalanced binary search trees
-    private static class BinaryNode<AnyType> {
-        // Constructors
-        BinaryNode(AnyType theElement) {
-            this(theElement, null, null);
-        }
+}
 
-        BinaryNode(AnyType theElement, BinaryNode<AnyType> lt, BinaryNode<AnyType> rt) {
-            element = theElement;
-            left = lt;
-            right = rt;
-        }
-
-        AnyType element; // The data in the node
-        BinaryNode<AnyType> left; // Left child
-        BinaryNode<AnyType> right; // Right child
-    }
-
-    private BinaryNode<AnyType> root;
-    private BinaryNode<AnyType> nullNode;
-
+class SplayTreeTest {
     // Test program; should print min and max and nothing else
     public static void main(String[] args) {
         SplayTree<Integer> t = new SplayTree<Integer>();

@@ -15,12 +15,38 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * 二叉查找树 (BST) : 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值; 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值。
+ * 
  * Implements an unbalanced binary search tree. Note that all "matching" is
  * based on the compareTo method.
  * 
  * @author Mark Allen Weiss
  */
+package ch03;
+
 public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
+
+    /** The tree root. */
+    private BinaryNode<AnyType> root;
+
+    // Basic node stored in unbalanced binary search trees
+    private static class BinaryNode<AnyType> {
+        // Constructors
+        BinaryNode(AnyType theElement) {
+            this(theElement, null, null);
+        }
+
+        BinaryNode(AnyType theElement, BinaryNode<AnyType> lt, BinaryNode<AnyType> rt) {
+            element = theElement;
+            left = lt;
+            right = rt;
+        }
+
+        AnyType element; // The data in the node
+        BinaryNode<AnyType> left; // Left child
+        BinaryNode<AnyType> right; // Right child
+    }
+
     /**
      * Construct the tree.
      */
@@ -113,7 +139,7 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
      */
     private BinaryNode<AnyType> insert(AnyType x, BinaryNode<AnyType> t) {
         if (t == null)
-            return new BinaryNode<>(x, null, null);
+            return new BinaryNode<>(x);
 
         int compareResult = x.compareTo(t.element);
 
@@ -176,7 +202,6 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
         if (t != null)
             while (t.right != null)
                 t = t.right;
-
         return t;
     }
 
@@ -219,38 +244,20 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
      * 
      * @param t the node that roots the subtree.
      */
-    private int height(BinaryNode<AnyType> t) {
+    int height(BinaryNode<AnyType> t) {
         if (t == null)
             return -1;
         else
             return 1 + Math.max(height(t.left), height(t.right));
     }
 
-    // Basic node stored in unbalanced binary search trees
-    private static class BinaryNode<AnyType> {
-        // Constructors
-        BinaryNode(AnyType theElement) {
-            this(theElement, null, null);
-        }
+}
 
-        BinaryNode(AnyType theElement, BinaryNode<AnyType> lt, BinaryNode<AnyType> rt) {
-            element = theElement;
-            left = lt;
-            right = rt;
-        }
-
-        AnyType element; // The data in the node
-        BinaryNode<AnyType> left; // Left child
-        BinaryNode<AnyType> right; // Right child
-    }
-
-    /** The tree root. */
-    private BinaryNode<AnyType> root;
-
+class BinarySearchTreeTest {
     // Test program
     public static void main(String[] args) {
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
-        final int NUMS = 4000;
+        final int NUMS = 4000 - (4000 + 39);
         final int GAP = 37;
 
         System.out.println("Checking... (no more output means success)");
@@ -263,6 +270,7 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
 
         if (NUMS < 40)
             t.printTree();
+
         if (t.findMin() != 2 || t.findMax() != NUMS - 2)
             System.out.println("FindMin or FindMax error!");
 

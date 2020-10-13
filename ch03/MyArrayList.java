@@ -1,5 +1,15 @@
+/**
+ * @author xknower
+ */
+package ch03;
 
 public class MyArrayList<AnyType> implements Iterable<AnyType> {
+
+    private static final int DEFAULT_CAPACITY = 10;
+
+    private AnyType[] theItems;
+    private int theSize;
+
     /**
      * Construct an empty ArrayList.
      */
@@ -126,6 +136,7 @@ public class MyArrayList<AnyType> implements Iterable<AnyType> {
      * 
      * @return an iterator positioned prior to the first element.
      */
+    @Override
     public java.util.Iterator<AnyType> iterator() {
         return new ArrayListIterator();
     }
@@ -133,6 +144,7 @@ public class MyArrayList<AnyType> implements Iterable<AnyType> {
     /**
      * Returns a String representation of this collection.
      */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
 
@@ -151,10 +163,12 @@ public class MyArrayList<AnyType> implements Iterable<AnyType> {
         private int current = 0;
         private boolean okToRemove = false;
 
+        @Override
         public boolean hasNext() {
             return current < size();
         }
 
+        @Override
         public AnyType next() {
             if (!hasNext())
                 throw new java.util.NoSuchElementException();
@@ -163,6 +177,7 @@ public class MyArrayList<AnyType> implements Iterable<AnyType> {
             return theItems[current++];
         }
 
+        @Override
         public void remove() {
             if (!okToRemove)
                 throw new IllegalStateException();
@@ -172,10 +187,6 @@ public class MyArrayList<AnyType> implements Iterable<AnyType> {
         }
     }
 
-    private static final int DEFAULT_CAPACITY = 10;
-
-    private AnyType[] theItems;
-    private int theSize;
 }
 
 class TestArrayList {

@@ -3,6 +3,8 @@
  * such as stacks, queues, and priority queues.
  * @author Mark Allen Weiss
  */
-public class UnderflowException extends RuntimeException
-{
+package ch03;
+
+public class UnderflowException extends RuntimeException {
+    public static final long serialVersionUID = -1;
 }

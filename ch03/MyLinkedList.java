@@ -1,7 +1,33 @@
 /**
  * LinkedList class implements a doubly-linked list.
+ * 
+ * @author xknower
  */
+package ch03;
+
 public class MyLinkedList<AnyType> implements Iterable<AnyType> {
+
+    private int theSize;
+    private int modCount = 0;
+
+    private Node<AnyType> beginMarker;
+    private Node<AnyType> endMarker;
+
+    /**
+     * This is the doubly-linked list node.
+     */
+    private static class Node<AnyType> {
+        public Node(AnyType d, Node<AnyType> p, Node<AnyType> n) {
+            data = d;
+            prev = p;
+            next = n;
+        }
+
+        public AnyType data;
+        public Node<AnyType> prev;
+        public Node<AnyType> next;
+    }
+
     /**
      * Construct an empty LinkedList.
      */
@@ -9,14 +35,14 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         doClear();
     }
 
-    private void clear() {
+    public void clear() {
         doClear();
     }
 
     /**
      * Change the size of this collection to zero.
      */
-    public void doClear() {
+    private void doClear() {
         beginMarker = new Node<>(null, null, null);
         endMarker = new Node<>(null, beginMarker, null);
         beginMarker.next = endMarker;
@@ -174,6 +200,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     /**
      * Returns a String representation of this collection.
      */
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
 
@@ -189,6 +216,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
      * 
      * @return an iterator positioned prior to the first element.
      */
+    @Override
     public java.util.Iterator<AnyType> iterator() {
         return new LinkedListIterator();
     }
@@ -203,10 +231,12 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         private int expectedModCount = modCount;
         private boolean okToRemove = false;
 
+        @Override
         public boolean hasNext() {
             return current != endMarker;
         }
 
+        @Override
         public AnyType next() {
             if (modCount != expectedModCount)
                 throw new java.util.ConcurrentModificationException();
@@ -219,6 +249,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
             return nextItem;
         }
 
+        @Override
         public void remove() {
             if (modCount != expectedModCount)
                 throw new java.util.ConcurrentModificationException();
@@ -231,25 +262,6 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         }
     }
 
-    /**
-     * This is the doubly-linked list node.
-     */
-    private static class Node<AnyType> {
-        public Node(AnyType d, Node<AnyType> p, Node<AnyType> n) {
-            data = d;
-            prev = p;
-            next = n;
-        }
-
-        public AnyType data;
-        public Node<AnyType> prev;
-        public Node<AnyType> next;
-    }
-
-    private int theSize;
-    private int modCount = 0;
-    private Node<AnyType> beginMarker;
-    private Node<AnyType> endMarker;
 }
 
 class TestLinkedList {
@@ -272,5 +284,6 @@ class TestLinkedList {
             itr.remove();
             System.out.println(lst);
         }
+
     }
 }
