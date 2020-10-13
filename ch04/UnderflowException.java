@@ -3,7 +3,7 @@
  * such as stacks, queues, and priority queues.
  * @author Mark Allen Weiss
  */
-package ch03;
+package ch04;
 
 public class UnderflowException extends RuntimeException {
     public static final long serialVersionUID = -1;
