@@ -21,7 +21,7 @@
  * 
  * @author Mark Allen Weiss
  */
-package ch03;
+package ch04;
 
 public class SplayTree<AnyType extends Comparable<? super AnyType>> {
 

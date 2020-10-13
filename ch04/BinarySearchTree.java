@@ -22,7 +22,7 @@
  * 
  * @author Mark Allen Weiss
  */
-package ch03;
+package ch04;
 
 public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
 

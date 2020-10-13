@@ -23,7 +23,7 @@
  * 
  * @author Mark Allen Weiss
  */
-package ch03;
+package ch04;
 
 public class AvlTree<AnyType extends Comparable<? super AnyType>> {
 
