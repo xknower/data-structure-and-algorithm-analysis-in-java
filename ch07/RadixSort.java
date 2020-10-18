@@ -1,17 +1,26 @@
+/**
+ * 基数排序
+ * 
+ * @author xknower
+ */
+package ch07;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Random;
 
 public class RadixSort {
+
     /*
      * Radix sort an array of Strings Assume all are all ASCII Assume all have same
      * length
      */
+    @SuppressWarnings("unchecked")
     public static void radixSortA(String[] arr, int stringLen) {
         final int BUCKETS = 256;
 
-        ArrayList<String>[] buckets = new ArrayList<>[BUCKETS];
+        List<String>[] buckets = new ArrayList[BUCKETS];
 
         for (int i = 0; i < BUCKETS; i++)
             buckets[i] = new ArrayList<>();
@@ -21,7 +30,7 @@ public class RadixSort {
                 buckets[s.charAt(pos)].add(s);
 
             int idx = 0;
-            for (ArrayList<String> thisBucket : buckets) {
+            for (List<String> thisBucket : buckets) {
                 for (String s : thisBucket)
                     arr[idx++] = s;
 
@@ -31,6 +40,8 @@ public class RadixSort {
     }
 
     /*
+     * 计算基数排序
+     * 
      * Counting radix sort an array of Strings Assume all are all ASCII Assume all
      * have same length
      */
@@ -71,11 +82,12 @@ public class RadixSort {
      * Radix sort an array of Strings Assume all are all ASCII Assume all have
      * length bounded by maxLen
      */
+    @SuppressWarnings("unchecked")
     public static void radixSort(String[] arr, int maxLen) {
         final int BUCKETS = 256;
 
-        ArrayList<String>[] wordsByLength = new ArrayList<>[maxLen + 1];
-        ArrayList<String>[] buckets = new ArrayList<>[BUCKETS];
+        ArrayList<String>[] wordsByLength = new ArrayList[maxLen + 1];
+        ArrayList<String>[] buckets = new ArrayList[BUCKETS];
 
         for (int i = 0; i < wordsByLength.length; i++)
             wordsByLength[i] = new ArrayList<>();
@@ -108,6 +120,10 @@ public class RadixSort {
         }
     }
 
+}
+
+class RadixSortTest {
+
     public static void main(String[] args) {
         List<String> lst = new ArrayList<>();
         Random r = new Random();
@@ -138,7 +154,7 @@ public class RadixSort {
         System.out.println("Elapsed: " + (end - start));
 
         start = System.currentTimeMillis();
-        countingRadixSort(arr2, LEN);
+        RadixSort.countingRadixSort(arr2, LEN);
         end = System.currentTimeMillis();
         System.out.println("Elapsed: " + (end - start));
 
@@ -146,5 +162,4 @@ public class RadixSort {
             if (!arr1[i].equals(arr2[i]))
                 System.out.println("OOPS!!");
     }
-
 }

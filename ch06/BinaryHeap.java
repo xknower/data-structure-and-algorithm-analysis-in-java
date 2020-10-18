@@ -13,12 +13,24 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * 二叉堆
+ * 
  * Implements a binary heap. Note that all "matching" is based on the compareTo
  * method.
  * 
  * @author Mark Allen Weiss
  */
+package ch06;
+
+import ch04.UnderflowException;
+
 public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
+
+    private static final int DEFAULT_CAPACITY = 10;
+
+    private int currentSize; // Number of elements in heap
+    private AnyType[] array; // The heap array
+
     /**
      * Construct the binary heap.
      */
@@ -31,6 +43,7 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
      * 
      * @param capacity the capacity of the binary heap.
      */
+    @SuppressWarnings("unchecked")
     public BinaryHeap(int capacity) {
         currentSize = 0;
         array = (AnyType[]) new Comparable[capacity + 1];
@@ -39,6 +52,7 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
     /**
      * Construct the binary heap given an array of items.
      */
+    @SuppressWarnings("unchecked")
     public BinaryHeap(AnyType[] items) {
         currentSize = items.length;
         array = (AnyType[]) new Comparable[(currentSize + 2) * 11 / 10];
@@ -66,6 +80,7 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
         array[hole] = x;
     }
 
+    @SuppressWarnings("unchecked")
     private void enlargeArray(int newSize) {
         AnyType[] old = array;
         array = (AnyType[]) new Comparable[newSize];
@@ -125,11 +140,6 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
         currentSize = 0;
     }
 
-    private static final int DEFAULT_CAPACITY = 10;
-
-    private int currentSize; // Number of elements in heap
-    private AnyType[] array; // The heap array
-
     /**
      * Internal method to percolate down in the heap.
      * 
@@ -151,6 +161,9 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
         array[hole] = tmp;
     }
 
+}
+
+class BinaryHeapTest {
     // Test program
     public static void main(String[] args) {
         int numItems = 10000;

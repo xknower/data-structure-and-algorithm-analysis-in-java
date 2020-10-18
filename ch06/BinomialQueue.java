@@ -13,15 +13,45 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * 二项队列
+ * 
  * Implements a binomial queue. Note that all "matching" is based on the
  * compareTo method.
  * 
  * @author Mark Allen Weiss
  */
+package ch06;
+
+import ch04.UnderflowException;
+
 public final class BinomialQueue<AnyType extends Comparable<? super AnyType>> {
+
+    private static final int DEFAULT_TREES = 1;
+
+    private int currentSize; // # items in priority queue
+    private BinNode<AnyType>[] theTrees; // An array of tree roots
+
+    private static class BinNode<AnyType> {
+        // Constructors
+        BinNode(AnyType theElement) {
+            this(theElement, null, null);
+        }
+
+        BinNode(AnyType theElement, BinNode<AnyType> lt, BinNode<AnyType> nt) {
+            element = theElement;
+            leftChild = lt;
+            nextSibling = nt;
+        }
+
+        AnyType element; // The data in the node
+        BinNode<AnyType> leftChild; // Left child
+        BinNode<AnyType> nextSibling; // Right child
+    }
+
     /**
      * Construct the binomial queue.
      */
+    @SuppressWarnings("unchecked")
     public BinomialQueue() {
         theTrees = new BinNode[DEFAULT_TREES];
         makeEmpty();
@@ -30,12 +60,14 @@ public final class BinomialQueue<AnyType extends Comparable<? super AnyType>> {
     /**
      * Construct with a single item.
      */
+    @SuppressWarnings("unchecked")
     public BinomialQueue(AnyType item) {
         currentSize = 1;
         theTrees = new BinNode[1];
-        theTrees[0] = new BinNode<>(item, null, null);
+        theTrees[0] = new BinNode<>(item);
     }
 
+    @SuppressWarnings("unchecked")
     private void expandTheTrees(int newNumTrees) {
         BinNode<AnyType>[] old = theTrees;
         int oldNumTrees = theTrees.length;
@@ -215,28 +247,6 @@ public final class BinomialQueue<AnyType extends Comparable<? super AnyType>> {
             theTrees[i] = null;
     }
 
-    private static class BinNode<AnyType> {
-        // Constructors
-        BinNode(AnyType theElement) {
-            this(theElement, null, null);
-        }
-
-        BinNode(AnyType theElement, BinNode<AnyType> lt, BinNode<AnyType> nt) {
-            element = theElement;
-            leftChild = lt;
-            nextSibling = nt;
-        }
-
-        AnyType element; // The data in the node
-        BinNode<AnyType> leftChild; // Left child
-        BinNode<AnyType> nextSibling; // Right child
-    }
-
-    private static final int DEFAULT_TREES = 1;
-
-    private int currentSize; // # items in priority queue
-    private BinNode<AnyType>[] theTrees; // An array of tree roots
-
     /**
      * Return the capacity.
      */
@@ -244,6 +254,9 @@ public final class BinomialQueue<AnyType extends Comparable<? super AnyType>> {
         return (1 << theTrees.length) - 1;
     }
 
+}
+
+class BinomialQueueTest {
     public static void main(String[] args) {
         int numItems = 10000;
         BinomialQueue<Integer> h = new BinomialQueue<>();

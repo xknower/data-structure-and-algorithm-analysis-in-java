@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.List;
-
 // SeparateChaining Hash table class
 //
 // CONSTRUCTION: an approximate initial size or default of 101
@@ -12,12 +9,26 @@ import java.util.List;
 // void makeEmpty( )      --> Remove all items
 
 /**
+ * 分离链接散列表 : 链表解决冲突问题
+ * 
  * Separate chaining table implementation of hash tables. Note that all
  * "matching" is based on the equals method.
  * 
  * @author Mark Allen Weiss
  */
+package ch05;
+
+import java.util.LinkedList;
+import java.util.List;
+
 public class SeparateChainingHashTable<AnyType> {
+
+    private static final int DEFAULT_TABLE_SIZE = 101;
+
+    /** The array of Lists. */
+    private List<AnyType>[] theLists;
+    private int currentSize;
+
     /**
      * Construct the hash table.
      */
@@ -30,10 +41,11 @@ public class SeparateChainingHashTable<AnyType> {
      * 
      * @param size approximate table size.
      */
+    @SuppressWarnings("unchecked")
     public SeparateChainingHashTable(int size) {
         theLists = new LinkedList[nextPrime(size)];
         for (int i = 0; i < theLists.length; i++)
-            theLists[i] = new LinkedList<>();
+            theLists[i] = new LinkedList<AnyType>();
     }
 
     /**
@@ -86,13 +98,16 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     /**
+     * 散列函数
+     *
      * A hash routine for String objects.
      * 
      * @param key       the String to hash.
      * @param tableSize the size of the hash table.
      * @return the hash value.
      */
-    public static int hash(String key, int tableSize) {
+    @SuppressWarnings("unused")
+    private static int hash(String key, int tableSize) {
         int hashVal = 0;
 
         for (int i = 0; i < key.length(); i++)
@@ -105,6 +120,10 @@ public class SeparateChainingHashTable<AnyType> {
         return hashVal;
     }
 
+    /**
+     * 重新调整Hash列表, List链表容量扩容两倍
+     */
+    @SuppressWarnings("unchecked")
     private void rehash() {
         List<AnyType>[] oldLists = theLists;
 
@@ -120,6 +139,12 @@ public class SeparateChainingHashTable<AnyType> {
                 insert(item);
     }
 
+    /**
+     * 散列函数
+     * 
+     * @param x the item to hash for.
+     * @return the hash value.
+     */
     private int myhash(AnyType x) {
         int hashVal = x.hashCode();
 
@@ -130,13 +155,9 @@ public class SeparateChainingHashTable<AnyType> {
         return hashVal;
     }
 
-    private static final int DEFAULT_TABLE_SIZE = 101;
-
-    /** The array of Lists. */
-    private List<AnyType>[] theLists;
-    private int currentSize;
-
     /**
+     * 求一个至少等于n的素数的内部方法。
+     * 
      * Internal method to find a prime number at least as large as n.
      * 
      * @param n the starting number (must be positive).
@@ -153,6 +174,8 @@ public class SeparateChainingHashTable<AnyType> {
     }
 
     /**
+     * 检验一个数是否为素数的内部方法。这不是一个高效的算法。
+     * 
      * Internal method to test if a number is prime. Not an efficient algorithm.
      * 
      * @param n the number to test.
@@ -172,6 +195,9 @@ public class SeparateChainingHashTable<AnyType> {
         return true;
     }
 
+}
+
+class SeparateChainingHashTableTest {
     // Simple main
     public static void main(String[] args) {
         SeparateChainingHashTable<Integer> H = new SeparateChainingHashTable<>();
@@ -201,5 +227,4 @@ public class SeparateChainingHashTable<AnyType> {
 
         System.out.println("Elapsed time: " + (endTime - startTime));
     }
-
 }

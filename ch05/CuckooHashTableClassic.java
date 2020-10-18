@@ -1,5 +1,3 @@
-import java.util.HashSet;
-
 // Cuckoo Hash table class
 //
 // CONSTRUCTION: a hashing function family and
@@ -16,7 +14,24 @@ import java.util.HashSet;
  * 
  * @author Mark Allen Weiss
  */
+package ch05;
+
 public class CuckooHashTableClassic<AnyType> {
+
+    private static final int DEFAULT_TABLE_SIZE = 101;
+
+    private final HashFamily<? super AnyType> hashFunctions;
+    private final int numHashFunctions;
+    private AnyType[] array; // The array of elements
+    private int currentSize;
+    private int subTableSize;
+    private int[] subTableStarts;
+
+    private static final double MAX_LOAD = 0.49;
+    private static final int ALLOWED_REHASHES = 100;
+
+    private int rehashes = 0;
+
     /**
      * Construct the hash table.
      */
@@ -40,11 +55,6 @@ public class CuckooHashTableClassic<AnyType> {
         allocateArray(subTableSize * numHashFunctions);
         doClear();
     }
-
-    private static final double MAX_LOAD = 0.49;
-    private static final int ALLOWED_REHASHES = 100;
-
-    private int rehashes = 0;
 
     /**
      * Insert into the hash table. If the item is already present, return false.
@@ -202,20 +212,12 @@ public class CuckooHashTableClassic<AnyType> {
             array[i] = null;
     }
 
-    private static final int DEFAULT_TABLE_SIZE = 101;
-
-    private final HashFamily<? super AnyType> hashFunctions;
-    private final int numHashFunctions;
-    private AnyType[] array; // The array of elements
-    private int currentSize;
-    private int subTableSize;
-    private int[] subTableStarts;
-
     /**
      * Internal method to allocate array.
      * 
      * @param arraySize the size of the array.
      */
+    @SuppressWarnings("unchecked")
     private void allocateArray(int arraySize) {
         array = (AnyType[]) new Object[arraySize];
     }
@@ -256,12 +258,15 @@ public class CuckooHashTableClassic<AnyType> {
         return true;
     }
 
+}
+
+class CuckooHashTableClassicTest {
     // Simple main
     public static void main(String[] args) {
         CuckooHashTableClassic<String> H = new CuckooHashTableClassic<>(new StringHashFamily(2));
 
-        java.util.Random r = new java.util.Random();
-        HashSet<String> t = new HashSet<>();
+        // java.util.Random r = new java.util.Random();
+        // HashSet<String> t = new HashSet<>();
 
         System.out.println("Checking... (no more output means success)");
 
@@ -312,5 +317,4 @@ public class CuckooHashTableClassic<AnyType> {
          * if( scan != null ) scan.close( ); }
          */
     }
-
 }

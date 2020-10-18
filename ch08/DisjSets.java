@@ -18,7 +18,12 @@
  * 
  * @author Mark Allen Weiss
  */
+package ch08;
+
 public class DisjSets {
+
+    private int[] s;
+
     /**
      * Construct the disjoint sets object.
      * 
@@ -61,8 +66,9 @@ public class DisjSets {
             return s[x] = find(s[x]);
     }
 
-    private int[] s;
+}
 
+class DisjSetsTest {
     // Test main; all finds on same output line should be identical
     public static void main(String[] args) {
         int NumElements = 128;

@@ -13,12 +13,41 @@
 // Throws UnderflowException as appropriate
 
 /**
+ * 
+ * 左式堆
+ * 
  * Implements a leftist heap. Note that all "matching" is based on the compareTo
  * method.
  * 
  * @author Mark Allen Weiss
  */
+package ch06;
+
+import ch04.UnderflowException;
+
 public class LeftistHeap<AnyType extends Comparable<? super AnyType>> {
+
+    private LeftistNode<AnyType> root; // root
+
+    private static class LeftistNode<AnyType> {
+        // Constructors
+        LeftistNode(AnyType theElement) {
+            this(theElement, null, null);
+        }
+
+        LeftistNode(AnyType theElement, LeftistNode<AnyType> lt, LeftistNode<AnyType> rt) {
+            element = theElement;
+            left = lt;
+            right = rt;
+            npl = 0;
+        }
+
+        AnyType element; // The data in the node
+        LeftistNode<AnyType> left; // Left child
+        LeftistNode<AnyType> right; // Right child
+        int npl; // null path length
+    }
+
     /**
      * Construct the leftist heap.
      */
@@ -131,27 +160,9 @@ public class LeftistHeap<AnyType extends Comparable<? super AnyType>> {
         root = null;
     }
 
-    private static class LeftistNode<AnyType> {
-        // Constructors
-        LeftistNode(AnyType theElement) {
-            this(theElement, null, null);
-        }
+}
 
-        LeftistNode(AnyType theElement, LeftistNode<AnyType> lt, LeftistNode<AnyType> rt) {
-            element = theElement;
-            left = lt;
-            right = rt;
-            npl = 0;
-        }
-
-        AnyType element; // The data in the node
-        LeftistNode<AnyType> left; // Left child
-        LeftistNode<AnyType> right; // Right child
-        int npl; // null path length
-    }
-
-    private LeftistNode<AnyType> root; // root
-
+class LeftistHeapTest {
     public static void main(String[] args) {
         int numItems = 100;
         LeftistHeap<Integer> h = new LeftistHeap<>();

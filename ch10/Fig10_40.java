@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_40 {
+
     /**
      * Compute Fibonacci numbers as described in Chapter 1.
      */

@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_46 {
+
     public static final long INFINITY = Long.MAX_VALUE;
 
     /**

@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_45 {
+
     public static double eval(int n) {
         double[] c = new double[n + 1];
 

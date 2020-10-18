@@ -1,4 +1,3 @@
-
 // QuadraticProbing Hash table class
 //
 // CONSTRUCTION: an approximate initial size or default of 101
@@ -10,12 +9,37 @@
 // void makeEmpty( )      --> Remove all items
 
 /**
+ * 探测散列表 : 平方探测法, 解决散列冲突问题
+ * 
  * Probing table implementation of hash tables. Note that all "matching" is
  * based on the equals method.
  * 
  * @author Mark Allen Weiss
  */
+package ch05;
+
 public class QuadraticProbingHashTable<AnyType> {
+
+    private static final int DEFAULT_TABLE_SIZE = 101;
+
+    private HashEntry<AnyType>[] array; // The array of elements
+    private int occupied; // The number of occupied cells
+    private int theSize; // Current size
+
+    private static class HashEntry<AnyType> {
+        public AnyType element; // the element
+        public boolean isActive; // false if marked deleted
+
+        public HashEntry(AnyType e) {
+            this(e, true);
+        }
+
+        public HashEntry(AnyType e, boolean i) {
+            element = e;
+            isActive = i;
+        }
+    }
+
     /**
      * Construct the hash table.
      */
@@ -46,7 +70,7 @@ public class QuadraticProbingHashTable<AnyType> {
 
         if (array[currentPos] == null)
             ++occupied;
-        array[currentPos] = new HashEntry<>(x, true);
+        array[currentPos] = new HashEntry<>(x);
         theSize++;
 
         // Rehash; see Section 5.5
@@ -74,6 +98,8 @@ public class QuadraticProbingHashTable<AnyType> {
     }
 
     /**
+     * 平方探测法, 解决散列冲突问题
+     * 
      * Method that performs quadratic probing resolution.
      * 
      * @param x the item to search for.
@@ -85,7 +111,8 @@ public class QuadraticProbingHashTable<AnyType> {
 
         while (array[currentPos] != null && !array[currentPos].element.equals(x)) {
             currentPos += offset; // Compute ith probe
-            offset += 2;
+            // offset += 1; // 线性探测法
+            offset *= 2; // 平方探测法
             if (currentPos >= array.length)
                 currentPos -= array.length;
         }
@@ -171,36 +198,19 @@ public class QuadraticProbingHashTable<AnyType> {
         return hashVal;
     }
 
-    private static class HashEntry<AnyType> {
-        public AnyType element; // the element
-        public boolean isActive; // false if marked deleted
-
-        public HashEntry(AnyType e) {
-            this(e, true);
-        }
-
-        public HashEntry(AnyType e, boolean i) {
-            element = e;
-            isActive = i;
-        }
-    }
-
-    private static final int DEFAULT_TABLE_SIZE = 101;
-
-    private HashEntry<AnyType>[] array; // The array of elements
-    private int occupied; // The number of occupied cells
-    private int theSize; // Current size
-
     /**
      * Internal method to allocate array.
      * 
      * @param arraySize the size of the array.
      */
+    @SuppressWarnings("unchecked")
     private void allocateArray(int arraySize) {
         array = new HashEntry[nextPrime(arraySize)];
     }
 
     /**
+     * 求一个至少等于n的素数的内部方法。
+     * 
      * Internal method to find a prime number at least as large as n.
      * 
      * @param n the starting number (must be positive).
@@ -217,6 +227,8 @@ public class QuadraticProbingHashTable<AnyType> {
     }
 
     /**
+     * 检验一个数是否为素数的内部方法。这不是一个高效的算法。
+     * 
      * Internal method to test if a number is prime. Not an efficient algorithm.
      * 
      * @param n the number to test.
@@ -236,6 +248,9 @@ public class QuadraticProbingHashTable<AnyType> {
         return true;
     }
 
+}
+
+class QuadraticProbingHashTableTest {
     // Simple main
     public static void main(String[] args) {
         QuadraticProbingHashTable<String> H = new QuadraticProbingHashTable<>();
@@ -268,5 +283,4 @@ public class QuadraticProbingHashTable<AnyType> {
 
         System.out.println("Elapsed time: " + (endTime - startTime));
     }
-
 }

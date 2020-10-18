@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_53 {
+
     public static final int NOT_A_VERTEX = -1;
 
     /**

@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_43 {
+
     public static double eval(int n) {
         if (n == 0)
             return 1.0;

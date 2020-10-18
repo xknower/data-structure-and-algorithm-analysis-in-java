@@ -1,3 +1,10 @@
+/**
+ * 计算词梯 (word ladders)
+ * 
+ * @author xknower
+ */
+package ch09;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.InputStreamReader;
@@ -39,6 +46,7 @@ Elapsed time SLOW: 95.9 vs 96.1 (H vs T)
 **/
 
 public class WordLadder {
+
     public static List<String> readWords(BufferedReader in) throws IOException {
         String oneLine;
         List<String> lst = new ArrayList<>();
@@ -256,36 +264,40 @@ public class WordLadder {
         return findChain(adjacentWords, first, second);
     }
 
+}
+
+class WordLadderTest {
+
     public static void main(String[] args) throws IOException {
         long start, end;
 
         FileReader fin = new FileReader("dict.txt");
         BufferedReader bin = new BufferedReader(fin);
-        List<String> words = readWords(bin);
+        List<String> words = WordLadder.readWords(bin);
         System.out.println("Read the words..." + words.size());
         Map<String, List<String>> adjacentWords;
 
         start = System.currentTimeMillis();
-        adjacentWords = computeAdjacentWords(words);
+        adjacentWords = WordLadder.computeAdjacentWords(words);
         end = System.currentTimeMillis();
         System.out.println("Elapsed time FAST: " + (end - start));
 
         start = System.currentTimeMillis();
-        adjacentWords = computeAdjacentWordsMedium(words);
+        adjacentWords = WordLadder.computeAdjacentWordsMedium(words);
         end = System.currentTimeMillis();
         System.out.println("Elapsed time MEDIUM: " + (end - start));
 
         start = System.currentTimeMillis();
-        adjacentWords = computeAdjacentWordsSlow(words);
+        adjacentWords = WordLadder.computeAdjacentWordsSlow(words);
         end = System.currentTimeMillis();
         System.out.println("Elapsed time SLOW: " + (end - start));
 
         // printHighChangeables( adjacentWords, 15 );
 
         System.out.println("Adjacents computed...");
-        List<String> mostChangeable = findMostChangeable(adjacentWords);
+        List<String> mostChangeable = WordLadder.findMostChangeable(adjacentWords);
         System.out.println("Most changeable computed...");
-        printMostChangeables(mostChangeable, adjacentWords);
+        WordLadder.printMostChangeables(mostChangeable, adjacentWords);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
@@ -294,7 +306,7 @@ public class WordLadder {
             String w1 = in.readLine();
             String w2 = in.readLine();
 
-            List<String> path = findChain(adjacentWords, w1, w2);
+            List<String> path = WordLadder.findChain(adjacentWords, w1, w2);
             System.out.print(path.size() + "...");
             for (String word : path)
                 System.out.print(" " + word);

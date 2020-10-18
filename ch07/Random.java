@@ -17,11 +17,16 @@
  * 
  * @author Mark Allen Weiss
  */
+package ch07;
+
 public class Random {
+
     private static final int A = 48271;
     private static final int M = 2147483647;
     private static final int Q = M / A;
     private static final int R = M % A;
+
+    private int state;
 
     /**
      * Construct this Random object with initial state obtained from system clock.
@@ -119,8 +124,9 @@ public class Random {
             Sort.swapReferences(a, j, r.randomInt(0, j));
     }
 
-    private int state;
+}
 
+class RadndomTest {
     // Test program
     public static void main(String[] args) {
         Random r = new Random(1);

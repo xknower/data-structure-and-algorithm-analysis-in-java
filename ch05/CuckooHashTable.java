@@ -1,5 +1,3 @@
-import java.util.Random;
-
 // Cuckoo Hash table class
 //
 // CONSTRUCTION: a hashing function family and
@@ -17,7 +15,26 @@ import java.util.Random;
  * 
  * @author Mark Allen Weiss
  */
+package ch05;
+
+import java.util.Random;
+
 public class CuckooHashTable<AnyType> {
+
+    private static final int DEFAULT_TABLE_SIZE = 101;
+
+    private final HashFamily<? super AnyType> hashFunctions;
+    private final int numHashFunctions;
+    private AnyType[] array; // The array of elements
+    private int currentSize; // The number of occupied cells
+
+    private Random r = new Random();
+
+    private static final double MAX_LOAD = 0.40;
+    private static final int ALLOWED_REHASHES = 1;
+
+    private int rehashes = 0;
+
     /**
      * Construct the hash table.
      * 
@@ -39,13 +56,6 @@ public class CuckooHashTable<AnyType> {
         hashFunctions = hf;
         numHashFunctions = hf.getNumberOfFunctions();
     }
-
-    private Random r = new Random();
-
-    private static final double MAX_LOAD = 0.40;
-    private static final int ALLOWED_REHASHES = 1;
-
-    private int rehashes = 0;
 
     private boolean insertHelper1(AnyType x) {
         final int COUNT_LIMIT = 100;
@@ -84,7 +94,7 @@ public class CuckooHashTable<AnyType> {
         }
     }
 
-    private boolean insertHelper2(AnyType x) {
+    boolean insertHelper2(AnyType x) {
         final int COUNT_LIMIT = 100;
 
         while (true) {
@@ -232,18 +242,12 @@ public class CuckooHashTable<AnyType> {
             array[i] = null;
     }
 
-    private static final int DEFAULT_TABLE_SIZE = 101;
-
-    private final HashFamily<? super AnyType> hashFunctions;
-    private final int numHashFunctions;
-    private AnyType[] array; // The array of elements
-    private int currentSize; // The number of occupied cells
-
     /**
      * Internal method to allocate array.
      * 
      * @param arraySize the size of the array.
      */
+    @SuppressWarnings("unchecked")
     private void allocateArray(int arraySize) {
         array = (AnyType[]) new Object[arraySize];
     }
@@ -284,6 +288,9 @@ public class CuckooHashTable<AnyType> {
         return true;
     }
 
+}
+
+class CuckooHashTableTest {
     // Simple main
     public static void main(String[] args) {
         long cumulative = 0;
@@ -329,5 +336,4 @@ public class CuckooHashTable<AnyType> {
 
         System.out.println("Total elapsed time is: " + cumulative);
     }
-
 }

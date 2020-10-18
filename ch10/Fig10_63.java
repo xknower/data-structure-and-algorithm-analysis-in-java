@@ -1,8 +1,17 @@
 /**
  * @author xknower
  */
+package ch10;
+
+import ch07.Random;
 
 public class Fig10_63 {
+
+    /**
+     * The number of witnesses queried in randomized primality test.
+     */
+    public static final int TRIALS = 5;
+
     /**
      * Method that implements the basic primality test. If witness does not return
      * 1, n is definitely composite. Do this by computing a^i (mod n) and looking
@@ -26,11 +35,6 @@ public class Fig10_63 {
 
         return y;
     }
-
-    /**
-     * The number of witnesses queried in randomized primality test.
-     */
-    public static final int TRIALS = 5;
 
     /**
      * Randomized primality test. Adjust TRIALS to increase confidence level.

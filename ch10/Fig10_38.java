@@ -1,8 +1,10 @@
 /**
  * @author xknower
  */
+package ch10;
 
 public class Fig10_38 {
+
     /**
      * Standard matrix multiplication. Arrays start at 0. Assumes a and b are
      * square.

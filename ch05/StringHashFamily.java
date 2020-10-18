@@ -1,6 +1,12 @@
+/**
+ * @author xknower
+ */
+package ch05;
+
 import java.util.Random;
 
 public class StringHashFamily implements HashFamily<String> {
+
     private final int[] MULTIPLIERS;
     private final Random r = new Random();
 
