@@ -3,6 +3,8 @@
  * 
  * @author Mark A. Weiss
  */
+package ch;
+
 public class IntCell {
   /**
    * Construct the IntCell. Initial value is 0.

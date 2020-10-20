@@ -1,3 +1,5 @@
+package ch;
+
 // RedBlackTree class
 //
 // CONSTRUCTION: with no parameters

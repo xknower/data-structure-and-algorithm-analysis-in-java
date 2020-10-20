@@ -1,3 +1,5 @@
+package ch;
+
 // Treap class
 //
 // CONSTRUCTION: with no initializer

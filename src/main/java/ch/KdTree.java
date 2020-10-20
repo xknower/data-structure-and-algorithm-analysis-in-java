@@ -1,6 +1,11 @@
 /**
  * Quick illustration of a two-dimensional tree.
+ * 
+ * @author xknower
  */
+package ch;
+
+@SuppressWarnings("unchecked")
 public class KdTree<AnyType extends Comparable<? super AnyType>> {
     private static class KdNode<AnyType> {
         AnyType[] data;
