@@ -1,14 +1,20 @@
 /**
  * LinkedList class implements a doubly-linked list.
  * 
+ * 链式存储结构 (linked-list)
+ * 
+ * - 双向链表 (doubly-linked)
+ * 
  * @author xknower
  */
 package ch03;
 
+import java.util.Iterator;
+
 public class MyLinkedList<AnyType> implements Iterable<AnyType> {
 
-    private int theSize;
-    private int modCount = 0;
+    private int theSize; // the number of items in this collection.
+    private int modCount = 0; // the number of operations. (add , remove)
 
     private Node<AnyType> beginMarker;
     private Node<AnyType> endMarker;
@@ -17,6 +23,11 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
      * This is the doubly-linked list node.
      */
     private static class Node<AnyType> {
+
+        public Node(AnyType d) {
+            this(d, null, null);
+        }
+
         public Node(AnyType d, Node<AnyType> p, Node<AnyType> n) {
             data = d;
             prev = p;
@@ -24,9 +35,12 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         }
 
         public AnyType data;
+
         public Node<AnyType> prev;
         public Node<AnyType> next;
     }
+
+    // ---------- ---------- ---------- ---------- ----------
 
     /**
      * Construct an empty LinkedList.
@@ -43,9 +57,9 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
      * Change the size of this collection to zero.
      */
     private void doClear() {
-        beginMarker = new Node<>(null, null, null);
-        endMarker = new Node<>(null, beginMarker, null);
-        beginMarker.next = endMarker;
+        this.beginMarker = new Node<>(null);
+        this.endMarker = new Node<>(null, this.beginMarker, null);
+        this.beginMarker.next = endMarker;
 
         theSize = 0;
         modCount++;
@@ -63,6 +77,8 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
     public boolean isEmpty() {
         return size() == 0;
     }
+
+    // ---------- ---------- ---------- ---------- ----------
 
     /**
      * Adds an item to this collection, at the end.
@@ -98,9 +114,13 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
      *                                   inclusive.
      */
     private void addBefore(Node<AnyType> p, AnyType x) {
+        // 1. 新建结点, 初始化该结点的前驱和后驱
+        // 2. 设置该结点的前驱结点的下一个结点为新建的结点
+        // 3. 设置该结点的后驱结点的前一个结点为新建的结点
         Node<AnyType> newNode = new Node<>(x, p.prev, p);
         newNode.prev.next = newNode;
-        p.prev = newNode;
+        newNode.next.prev = newNode;
+
         theSize++;
         modCount++;
     }
@@ -159,6 +179,7 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
         if (idx < lower || idx > upper)
             throw new IndexOutOfBoundsException("getNode index: " + idx + "; size: " + size());
 
+        // 搜索对应索引 idx 的结点, 使用从前往后或者从后往前查找
         if (idx < size() / 2) {
             p = beginMarker.next;
             for (int i = 0; i < idx; i++)
@@ -210,6 +231,8 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
 
         return new String(sb);
     }
+
+    // ---------- ---------- ---------- ---------- ----------
 
     /**
      * Obtains an Iterator object used to traverse the collection.
@@ -264,21 +287,31 @@ public class MyLinkedList<AnyType> implements Iterable<AnyType> {
 
 }
 
-class TestLinkedList {
+class MyLinkedListTest {
     public static void main(String[] args) {
         MyLinkedList<Integer> lst = new MyLinkedList<>();
 
+        // 将数字[0 -> 9], 从链表末端插入
         for (int i = 0; i < 10; i++)
             lst.add(i);
+
+        // -> [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+        // 将数字[29 -> 20], 从链表首端插入
         for (int i = 20; i < 30; i++)
             lst.add(0, i);
 
+        // -> [ 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
+
+        // 移除链表首尾数据
         lst.remove(0);
         lst.remove(lst.size() - 1);
 
+        // -> [ 28, 27, 26, 25, 24, 23, 22, 21, 20, 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+
         System.out.println(lst);
 
-        java.util.Iterator<Integer> itr = lst.iterator();
+        Iterator<Integer> itr = lst.iterator();
         while (itr.hasNext()) {
             itr.next();
             itr.remove();
